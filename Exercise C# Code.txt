@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Gerontakismovies
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random rng = new Random();
+            decimal[] reviews = new decimal[5];
+            decimal rating = 0;
+            var mymovie = new List<movie>();
+            for (int i = 10; i < 40; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    reviews[j] = rng.Next(10);
+                }
+                rating = reviews.Sum() / reviews.Length;
+                var movie = new movie()
+                {
+                    title = "Movie" + i,
+                    Rating = rating,
+                    totaltickets = rng.Next(10000, 50000),
+                    actors = "Actor" + i,
+                    Reviews = reviews
+                };
+                mymovie.Add(movie);
+            }
+            var SortedList = mymovie.OrderByDescending(o => o.Rating).ToList();
+
+            Console.WriteLine("TOP 10 MOVIES");
+            Console.WriteLine("-------------");
+
+            for (var i = 0; i < 10; i++)
+            {
+                Console.WriteLine("Movie title: {0} " + "Rating: {1} " + "Total Receipts(euro): {2} " + "Actor: {3} ", SortedList[i].title, SortedList[i].Rating, SortedList[i].totaltickets, SortedList[i].actors);
+            }
+               Console.ReadLine();
+        }
+        public class movie
+        {
+            public string title { get; set; }
+
+            public decimal Rating { get; set; }
+
+            public int totaltickets { get; set; }
+
+            public string actors { get; set; }
+
+            public decimal[] Reviews { get; set; }
+        }
+    }
+}
